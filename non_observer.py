@@ -13,7 +13,7 @@ def get_all_addresses(number: int = 100):
     return addresses
 
 async def main():
-    number = input("How many addresses do you want to check? (100 is recommended): ")
+    number = int(input("How many addresses do you want to check? (100 is recommended): "))
     addresses = get_all_addresses(number)
     used_addresses = []
     await node.open_rpc_clients()
@@ -47,7 +47,7 @@ async def main():
         writer.writerow(['Address', 'Balance'])
         for address in address_balance:
             writer.writerow([address, address_balance[address]])
-            
+
     print("Addresses with balance:")
     for address in address_balance:
         print(f"{address}: {address_balance[address]}")

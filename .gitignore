@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# created files
+non-observer.txt
+non-observer.csv
