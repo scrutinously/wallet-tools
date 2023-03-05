@@ -1,4 +1,5 @@
 from chia.rpc.full_node_rpc_client import FullNodeRpcClient
+from chia.types.coin_record import CoinRecord
 from chia.util.config import load_config
 from chia.util.ints import uint16
 from pathlib import Path

@@ -1,4 +1,4 @@
-from get_coins import rpc
+from get_coins import rpc, CoinRecord
 from sk_derivation import get_non_observer_address, get_sk, encode_puzzle_hash
 import asyncio
 import csv
@@ -23,6 +23,7 @@ async def main():
     index = 0
     balance = 0
     address_balance = {}
+    coin: CoinRecord
     for coin in coins:
         ph = coin.coin.puzzle_hash
         address = encode_puzzle_hash(ph, 'xch')
@@ -31,7 +32,7 @@ async def main():
             new_index = addresses.index(address)
             if new_index > index:
                 index = new_index
-        if not coin.spent_block_index:
+        if not coin.spent:
             balance += coin.coin.amount
             try:
                 address_balance[address] += coin.coin.amount
