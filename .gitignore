@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # created files
-non-observer.txt
-non-observer.csv
+non_observer.txt
+non_observer.csv
