@@ -25,6 +25,15 @@ def bytes_from_hash(phrase: str) -> bytes:
     assert len(phrase_hash) == 32
     return phrase_hash
 
+def double_entropy_bytes(entropy_bytes: bytes) -> bytes:
+    """
+    Hash input bytes with random bytes
+    """
+    random_bytes = generate_bytes()
+    double_bytes = sha256(entropy_bytes + random_bytes).digest()
+    assert len(double_bytes) == 32
+    return double_bytes
+
 def bytes_from_file(file_path: str) -> bytes:
     """
     Reads a file and returns its contents as bytes.
@@ -119,8 +128,9 @@ def main():
     print("1) Generate a random mnemonic phrase")
     print("2) Generate a mnemonic phrase from a phrase")
     print("3) Generate a mnemonic phrase from a file hash")
-    choice = input("Enter selection (1-3, q to quit): ")
-    if not any(choice == c for c in ["1", "2", "3", "q"]):
+    print("4) Generate a random mnemonic with entropy phrase")
+    choice = input("Enter selection (1-4, q to quit): ")
+    if not any(choice == c for c in ["1", "2", "3", "4", "q"]):
         print("Invalid choice.")
         main()
     if choice == "1":
@@ -157,6 +167,19 @@ def main():
             print("File not found.")
             print("")
             main()
+        print(f"Generated mnemonic phrase:")
+        print(mnemonic)
+        seed = mnemonic_to_seed(mnemonic)
+        print_public_keys(seed)
+        choice = input("Run again? (y/n): ")
+        if choice == "y":
+            main()
+        else:
+            exit()
+    elif choice == "4":
+        print("______________________________________________")
+        phrase = input("Enter phrase: ")
+        mnemonic = bytes_to_mnemonic(double_entropy_bytes(bytes_from_hash(phrase)))
         print(f"Generated mnemonic phrase:")
         print(mnemonic)
         seed = mnemonic_to_seed(mnemonic)
